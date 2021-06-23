@@ -16,9 +16,16 @@
         <result property="userSex" column="sex"></result>
         <result property="userBirthday" column="birthday"></result>
     </resultMap>
+
+    <!-- 了解内容  sql语句的抽取-->
+    <sql id="defaultUser">
+        select * from user
+    </sql>
+
 <!--查询所有-->
     <select id="findAll" resultMap="userMap">
-        select * from user ;
+        <include refid="defaultUser"></include>
+--         select * from user ;
     </select>
 
 <!--    根据id查询用户-->
@@ -36,12 +43,24 @@
         select * from user where username like #{user.userName};
     </select>
 
-    <!-- 根据条件查询   -->
+    <!-- 根据条件查询  ,可以做sql语句拼接  -->
     <select id="findUserByCondition" resultMap="userMap" parameterType="user">
         select * from user where 1=1
         <if test="userName != null">
             and username=#{userName}
         </if>
     </select>
+    <!--   根据queryVo中 id 的集合来查询用户 -->
+    <select id="findUserInIds" resultMap="userMap" parameterType="queryVo">
+        <!-- select * from user where id in(11,12,13); 对于集合的写法 -->
+        select * from user
+        <where>
+            <if test="ids!=null and ids.size > 0">
+                <foreach collection="ids" open="and id in (" close=")" item="uid" separator=",">#{uid}</foreach><!--这地方uid和item中对应-->
+            </if>
+        </where>
+    </select>
+
+
 
 </mapper>

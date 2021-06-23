@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -116,4 +117,22 @@ public class MybatisTest {
         }
     }
 
+
+    /**
+     * foreach 标签的使用
+     */
+    @Test
+    public void testFindInIds(){
+        QueryVo vo  = new QueryVo();
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(41);
+        list.add(42);
+        list.add(43);
+        vo.setIds(list);
+
+        List<User> users = userDao.findUserInIds(vo);
+        for(User user : users){
+            System.out.println(user);
+        }
+    }
 }

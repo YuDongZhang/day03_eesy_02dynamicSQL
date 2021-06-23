@@ -1,11 +1,15 @@
 package com.itheima.domain;
 
+import java.util.List;
+
 /**
  * @author 黑马程序员
  * @Company http://www.ithiema.com
  * 把实际的对象再包装一层 , 在开发中由多个对象,组合起来的
  */
 public class QueryVo {
+
+    private List<Integer> ids;
 
     private User user;
 
@@ -15,5 +19,13 @@ public class QueryVo {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
     }
 }
